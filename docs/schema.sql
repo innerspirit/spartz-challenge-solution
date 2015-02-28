@@ -42,6 +42,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `visited_cities` (
   `user_id` INT NOT NULL,
   `city_id` INT NOT NULL,
+  `visited_on` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`, `city_id`),
   INDEX `fk_users_has_cities_cities1_idx` (`city_id` ASC),
   INDEX `fk_users_has_cities_users_idx` (`user_id` ASC),

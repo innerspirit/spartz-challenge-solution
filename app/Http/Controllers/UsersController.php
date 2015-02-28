@@ -22,9 +22,21 @@ class UsersController extends Controller {
 	 *
 	 * @return Response array The cities the user has visited.
 	 */
-	public function cities()
+	public function cities($uid)
 	{
-		
+		$user = \App\User::find($uid);
+
+		if (empty($user)) {
+			return ['error' => 'Invalid user ID'];
+		}
+
+		$visitedCities = $user->visitedCities()->withPivot('visited_on')->paginate();
+
+		if (!count($visitedCities)) {
+			return ['error' => 'The user has not visited any cities.'];
+		}
+
+		return $visitedCities->toArray();
 	}
 
 }

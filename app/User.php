@@ -31,4 +31,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+    public function visitedCities()
+    {
+        return $this->belongsToMany('App\City', 'visited_cities', 'user_id', 'city_id');
+    }
+
 }

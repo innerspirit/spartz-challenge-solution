@@ -42,9 +42,18 @@ class CitiesController extends Controller {
 			return ['error' => 'The specified city was not found.'];
 		}
 
+		// see: https://developers.google.com/maps/articles/phpsqlsearch_v3?csw=1#findnearsql
+		// to optimize this, pre-calculate all combinations into another table and query that one
+
 		$distanceField = "( 3959 * acos( cos( radians({$city->latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians({$city->longitude}) ) + sin( radians({$city->latitude}) ) * sin( radians( latitude ) ) ) )";
 
-		$closeCities = DB::table('cities')->select(DB::raw("id, $distanceField as distance"))->where('id', '!=', $city->id)->having('distance', '<', $range)->orderBy('distance')->simplePaginate(5);
+		$closeCities = DB::table('cities')
+			->select(DB::raw("id, $distanceField as distance"))
+			->where('id', '!=', $city->id)
+			->where('state', $state)
+			->having('distance', '<', $range)
+			->orderBy('distance')
+			->simplePaginate(10);
 
 		if (!count($closeCities)) {
 			return ['error' => 'No cities found within the specified mile radius.'];
