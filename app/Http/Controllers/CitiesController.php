@@ -22,9 +22,7 @@ class CitiesController extends Controller {
 		if (!count($cities)) {
 			return ['error' => 'No cities found.'];
 		}
-		return [
-			$cities->toArray()
-		];
+		return $cities->toArray();
 	}
 
 	/**
@@ -58,9 +56,7 @@ class CitiesController extends Controller {
 		if (!count($closeCities)) {
 			return ['error' => 'No cities found within the specified mile radius.'];
 		}
-		return [
-			$closeCities->toArray()
-		];
+		return $closeCities->toArray();
 	}
 
 }

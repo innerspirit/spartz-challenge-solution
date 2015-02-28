@@ -18,8 +18,3 @@ Route::get('/v1/states/{state}/cities/{city}', 'CitiesController@nearCity');
 
 Route::get('/v1/users/{user}/visits', 'UsersController@cities');
 Route::post('/v1/users/{user}/visits', 'UsersController@registerVisit');
-
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);

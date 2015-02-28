@@ -3,6 +3,8 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Request as CurrentRequest;
+
 use Illuminate\Http\Request;
 
 class UsersController extends Controller {
@@ -12,9 +14,23 @@ class UsersController extends Controller {
 	 *
 	 * @return Response bool Whether the action succeded or not.
 	 */
-	public function registerVisit()
+	public function registerVisit($uid)
 	{
-		
+		$user = \App\User::find($uid);
+
+		if (empty($user)) {
+			return ['error' => 'Invalid user ID.'];
+		}
+
+		$city = \App\City::where(['name' => CurrentRequest::input('city'), 'state' => CurrentRequest::input('state')])->first();
+
+		if (empty($city)) {
+			return ['error' => 'Invalid city and state.'];
+		}
+
+		$user->visitedCities()->attach($city->id);
+
+		return ['result' => 'Success'];
 	}
 
 	/**
@@ -27,7 +43,7 @@ class UsersController extends Controller {
 		$user = \App\User::find($uid);
 
 		if (empty($user)) {
-			return ['error' => 'Invalid user ID'];
+			return ['error' => 'Invalid user ID.'];
 		}
 
 		$visitedCities = $user->visitedCities()->withPivot('visited_on')->paginate();
