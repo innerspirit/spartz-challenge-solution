@@ -1,5 +1,7 @@
 # Spartz Coding Challenge
 
+This is my solution to the Spartz Coding Challenge.
+
 ## Build A Simple REST API
 
 We have included a set of sample data in `cities.csv` and `users.csv`. Please implement a few basic operations on the data provided, including listing the cities in a given state, listing cities near another city, and registering a visit to a particular city by a user.  You may use whatever language or tools you wish to complete the exercise.  Keep in mind that you may be asked to extend your solution in an on-site interview.
